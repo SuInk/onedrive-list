@@ -8,7 +8,7 @@ const {
 
 export default async (req, res) => {
   let { path = ''} = req.query
-  console.log("path:::",path)
+  console.log("path:::",req)
 
   const access_token = await getAccessToken()
   if (!access_token) {
