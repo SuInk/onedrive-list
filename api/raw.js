@@ -8,8 +8,7 @@ const {
 
 export default async (req, res) => {
   let { path = ''} = req.referer
-  path = path.replace('https://'+req.host,'')
-  console.log("path:::",req)
+  console.log("path:::",path)
 
   const access_token = await getAccessToken()
   if (!access_token) {
