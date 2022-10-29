@@ -8,7 +8,6 @@ const {
 
 export default async (req, res) => {
   let { path } = req.query
-  path = path.replace('/api/raw', '')
   console.log("path:::",path)
 
   const access_token = await getAccessToken()
