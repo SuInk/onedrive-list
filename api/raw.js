@@ -7,7 +7,8 @@ const {
 } = process.env
 
 export default async (req, res) => {
-  let { path = ''} = req.query
+  let { path = ''} = req.referer
+  path = path.replace('https://'+req.host,'')
   console.log("path:::",req)
 
   const access_token = await getAccessToken()
