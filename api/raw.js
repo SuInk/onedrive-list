@@ -7,7 +7,7 @@ const {
 } = process.env
 
 export default async (req, res) => {
-  let { path } = req.query
+  let { path = ''} = req.query
   console.log("path:::",path)
 
   const access_token = await getAccessToken()
