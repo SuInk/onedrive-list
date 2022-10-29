@@ -7,7 +7,7 @@ const {
 } = process.env
 
 export default async (req, res) => {
-  let { path = '' } = req
+  let { path = '' } = req.query
   path = path.replace('/api/raw', '')
   console.log("path:::",path)
 
