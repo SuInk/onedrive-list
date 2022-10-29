@@ -1,7 +1,6 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/raw*", "destination": "/api/raw" },
     { "source": "/((?!api).*)", "destination": "/" }
   ],
   "headers": [
