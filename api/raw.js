@@ -7,7 +7,9 @@ const {
 } = process.env
 
 export default async (req, res) => {
-  const { path = '' } = req.query
+  let { path = '' } = req
+  path = path.replace('/api/raw', '')
+  console.log("path:::",path)
 
   const access_token = await getAccessToken()
   if (!access_token) {
