@@ -204,7 +204,7 @@ function preview(name, size) {
         <code>File Size: ${formatSize(size)}</code><br>
         <code>File Path: ${PATH}</code><br>
         <code>File Link: ${location.host + downloadUrl}</code><br>
-        <p><a target="_blank" href="https://mozilla.github.io/pdf.js/legacy/web/viewer.html?${location.host + downloadUrl}">Preview Online (PDF.js)</a></p>
+        <p><a target="_blank" href="https://mozilla.github.io/pdf.js/legacy/web/viewer.html?file=${location.host + downloadUrl}">Preview Online (PDF.js)</a></p>
         <p><a target="_blank" href="https://docs.google.com/viewer?${new URLSearchParams({ url: new URL(downloadUrl + '&t=' + new Date().getTime(), location.href).toString() }).toString()}">Preview Online (Google Docs)</a></p>
         `, true)
       progress.finish()
