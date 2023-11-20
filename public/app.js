@@ -52,6 +52,7 @@ function handler(e) {
 }
 
 function preview(name, size) {
+  document.title = name
   progress.start()
   breadcrumb(PATH)
   document.getElementById('readme').style.display = 'none'
@@ -304,7 +305,7 @@ function folderView(data) {
     list += `<div class="item">
       <i class="${getIconClass(name, isFile)}"></i>${name}<div style="flex-grow: 1"></div>
       <span class="size">${formatSize(size)}</span>
-      <a href="${url}" data-name="${name}" data-size="${size}" data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">${name}</a>
+      <a href="${new URL(url, location.href).toString()}" target="${isFile ?'_blank' : '_self'}"  data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">${name}</a>
     </div>`
     !isFile && urlList.push(url)
 
