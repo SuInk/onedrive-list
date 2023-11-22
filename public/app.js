@@ -294,7 +294,7 @@ function folderView(data) {
   const parentPath = isIndex ? '/' : `${PATH.replace(/\/$/, '').split('/').slice(0, -1).join('/')}/`
   const parentUrl = path2Url(parentPath)
 
-  let list = `<div class="item" ${isIndex ? 'style="display: none;"' : ''}><i class="far fa-folder"></i>..<a href="${parentUrl}">...</a></div>`
+  let list = `<div class="item" ${isIndex ? 'style="display: none;"' : ''}><a href="${parentUrl}"><i class="far fa-folder"></i>...</a></div>`
 
   console.log('folder size:', data.value.length)
   const urlList = []
@@ -303,9 +303,10 @@ function folderView(data) {
     const { name, size, lastModifiedDateTime } = item
     const url = path2Url(`${PATH}${name}${isFile ? '' : '/'}`)
     list += `<div class="item">
-      <i class="${getIconClass(name, isFile)}"></i>${name}<div style="flex-grow: 1"></div>
-      <span class="size">${formatSize(size)}</span>
-      <a href="${new URL(url, location.href).toString()}" target="${isFile ?'_blank' : '_self'}"  data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">${name}</a>
+      <a href="${new URL(url, location.href).toString()}" target="${isFile ?'_blank' : '_self'}" data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">
+      <i class="${getIconClass(name, isFile)}">&nbsp;</i>
+        ${name}<span class="size">${formatSize(size)}</span>
+      </a>
     </div>`
     !isFile && urlList.push(url)
 
