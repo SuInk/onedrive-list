@@ -223,7 +223,7 @@ function preview(name, size) {
         <code>File Path: ${PATH}</code><br>
         <code>File Link: ${new URL(downloadUrl, location.href).toString()}</code><br>
         <p>Sorry, we don't support previewing <code>${/\./.test(name) ? '.' + extension : name}</code> files as of today. You can <a data-dl="true" href="${downloadUrl}">download</a> the file directly.</p></div>`
-        , true)
+          , true)
       progress.finish()
   }
   document.getElementById('app').classList.remove('unclickable')
@@ -252,44 +252,44 @@ function onPopState(delay = 0) {
     method: 'GET',
     cache: CONFIG.fetch_cache,
   }).then(r => {
-      if (r.ok) {
-        return r.json()
-      } else {
-        throw `API: ${r.status}, ${r.statusText}`
-      }
-    })
-    .then(d => setTimeout(() => {
-      breadcrumb(PATH)
+    if (r.ok) {
+      return r.json()
+    } else {
+      throw `API: ${r.status}, ${r.statusText}`
+    }
+  })
+      .then(d => setTimeout(() => {
+        breadcrumb(PATH)
 
-      // console.log(d)
-      if ('value' in d) {
-        folderView(d)
-      } else if ('file' in d) {
-        preview(d.name, d.size)
-      } else if ('error' in d) {
-        const error = d.error
-        switch (error.code) {
-          case 'itemNotFound':
-            folderView({ value: [] })
-          default:
-            alert(error.code)
+        // console.log(d)
+        if ('value' in d) {
+          folderView(d)
+        } else if ('file' in d) {
+          preview(d.name, d.size)
+        } else if ('error' in d) {
+          const error = d.error
+          switch (error.code) {
+            case 'itemNotFound':
+              folderView({ value: [] })
+            default:
+              alert(error.code)
+          }
         }
-      }
-      window.isLoading = false
-      console.timeEnd('Loading')
-      document.getElementById('readme').style.display = 'none'
-      document.getElementById('app').classList.remove('unclickable')
-      progress.finish()
-      document.getElementById('list').classList.remove('hide')
-    }, delay))
-    .catch(e => setTimeout(() => {
-      window.isLoading = false
-      console.timeEnd('Loading')
-      document.getElementById('app').classList.remove('unclickable')
-      console.error(e)
-      progress.finish()
-      alert(e)
-    }, delay))
+        window.isLoading = false
+        console.timeEnd('Loading')
+        document.getElementById('readme').style.display = 'none'
+        document.getElementById('app').classList.remove('unclickable')
+        progress.finish()
+        document.getElementById('list').classList.remove('hide')
+      }, delay))
+      .catch(e => setTimeout(() => {
+        window.isLoading = false
+        console.timeEnd('Loading')
+        document.getElementById('app').classList.remove('unclickable')
+        console.error(e)
+        progress.finish()
+        alert(e)
+      }, delay))
 }
 function folderView(data) {
   const isIndex = PATH == '/'
@@ -305,7 +305,7 @@ function folderView(data) {
     const { name, size, lastModifiedDateTime } = item
     const url = path2Url(`${PATH}${name}${isFile ? '' : '/'}`)
     list += `<div class="item">
-      <a href="${new URL(url, location.href).toString()}"  target="${isFile ?'_blank' : '_self'}" data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">
+      <a href="${new URL(url, location.href).toString()}" class="file" target="${isFile ?'_blank' : '_self'}" data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">
       <i class="${getIconClass(name, isFile)}"></i>${name}<span class="size">${formatSize(size)}</span>
       </a>
     </div>`
@@ -389,16 +389,16 @@ function preload(p) {
 }
 function formatSize(s = 0) {
   return s < 1024
-    ? s + ' B'
-    : s < Math.pow(1024, 2)
-      ? parseFloat(s / Math.pow(1024, 1)).toFixed(1) + ' KiB'
-      : s < Math.pow(1024, 3)
-        ? parseFloat(s / Math.pow(1024, 2)).toFixed(1) + ' MiB'
-        : s < Math.pow(1024, 4)
-          ? parseFloat(s / Math.pow(1024, 3)).toFixed(1) + ' GiB'
-          : s < Math.pow(1024, 5)
-            ? parseFloat(s / Math.pow(1024, 4)).toFixed(1) + ' TiB'
-            : '> 1PiB'
+      ? s + ' B'
+      : s < Math.pow(1024, 2)
+          ? parseFloat(s / Math.pow(1024, 1)).toFixed(1) + ' KiB'
+          : s < Math.pow(1024, 3)
+              ? parseFloat(s / Math.pow(1024, 2)).toFixed(1) + ' MiB'
+              : s < Math.pow(1024, 4)
+                  ? parseFloat(s / Math.pow(1024, 3)).toFixed(1) + ' GiB'
+                  : s < Math.pow(1024, 5)
+                      ? parseFloat(s / Math.pow(1024, 4)).toFixed(1) + ' TiB'
+                      : '> 1PiB'
 }
 function breadcrumb(p = '/') {
   p = p.replace(/\/$/, '')
