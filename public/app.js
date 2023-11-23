@@ -303,13 +303,13 @@ function folderView(data) {
     const { name, size, lastModifiedDateTime } = item
     const url = path2Url(`${PATH}${name}${isFile ? '' : '/'}`)
     list += `<div class="item">
-      <a href="${new URL(url, location.href).toString()}" target="${isFile ?'_blank' : '_self'}" data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">
-      <i class="${getIconClass(name, isFile)}">&nbsp;</i>
-        ${name}<span class="size">${formatSize(size)}</span>
+      <a href="${new URL(url, location.href).toString()}"  target="${isFile ?'_blank' : '_self'}" data-name="${name}" data-size="${size}"data-type="${isFile ? 'file' : 'folder'}" title="${new Date(lastModifiedDateTime).toLocaleString()}">
+      <i class="${getIconClass(name, isFile)}"></i>${name}<span class="size">${formatSize(size)}</span>
       </a>
     </div>`
     !isFile && urlList.push(url)
 
+    console.log(name)
     if (['readme.md', 'readme.txt'].includes(name.toLowerCase())) {
       const _path = PATH
       const loadReadme = async () => {
