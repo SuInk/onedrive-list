@@ -11,6 +11,5 @@ export const wrapPath = (path, type = '/children') => {
   let wrapedPath = pathPosix.join(basePath, pathPosix.resolve('/', path))
   wrapedPath = wrapedPath.replace(/\/$/, '')
   if (wrapedPath === '') return `/root${type}`
-  return `/root:${encodeURIComponent(wrapedPath)}${(type == '/children' && !isFolder) ? '' : `:${type}`}`
-  // return `/root:${encodeURIComponent(wrapedPath)}:${type}`
+  return `/root:${wrapedPath}${(type == '/children' && !isFolder) ? '' : `:${type}`}`
 }
