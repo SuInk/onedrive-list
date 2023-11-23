@@ -34,7 +34,7 @@ app.get('/api/item', (req, res) => {
 })
 
 app.get('/api/raw*', (req, res) => {
-  console.log(req.url)
+  console.log("url:::",req.url)
   try {
     api_raw(req, res)
   } catch (e) {

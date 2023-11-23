@@ -58,12 +58,14 @@ function preview(name, size) {
   document.getElementById('readme').style.display = 'none'
 
   const downloadUrl = getApiUrl(`${PATH}`, 'raw', name)
+  console.log('preview:::', name, size, downloadUrl,PATH)
   const pushHtml = (s, show_dl_btn = true, show_video_player_btn = false, p = '1rem 1rem') => {
     document.getElementById('list').innerHTML = `<div style="padding: ${p};">${s}</div>`
     let btn_container = ''
     if (show_dl_btn) {
       btn_container += `<a class="button" data-dl="true" href="${downloadUrl}"><i class="far fa-arrow-alt-circle-down"></i>&nbsp;Download</a>`
     }
+    // video player button
     if (show_video_player_btn) {
       const url = new URL(downloadUrl, location.href).toString()
       btn_container += `<a class="button" data-dl="true" onclick="dp.pause();" href="potplayer://${url}"><i class="fas fa-external-link-alt"></i>&nbsp;Potplayer</a>`
@@ -195,8 +197,8 @@ function preview(name, size) {
         <code>File Name: ${name}</code><br>
         <code>File Size: ${formatSize(size)}</code><br>
         <code>File Path: ${PATH}</code><br>
-        <code>File Link: ${new URL(downloadUrl, location.href).toString()}</code><br>
-        <p><a target="_blank" href="https://mozilla.github.io/pdf.js/legacy/web/viewer.html?${new URLSearchParams({ file: new URL(downloadUrl, location.href).toString() }).toString()}">Preview Online (PDF.js)</a></p>
+        <code>File Link: ${location.host + downloadUrl}</code><br>
+        <p><a target="_blank" href="https://mozilla.github.io/pdf.js/legacy/web/viewer.html?file=${location.host + downloadUrl}">Preview Online (PDF.js)</a></p>
         <p><a target="_blank" href="https://docs.google.com/viewer?${new URLSearchParams({ url: new URL(downloadUrl + '&t=' + new Date().getTime(), location.href).toString() }).toString()}">Preview Online (Google Docs)</a></p>
         `, true)
       progress.finish()
@@ -351,6 +353,9 @@ function folderView(data) {
 function getApiUrl(path = '/', type = 'item', filename = '') {
   const searchParams = `?${new URLSearchParams({ path }).toString()}`
   const pathWithFilename = (type === 'raw' && filename) ? `/${encodeURIComponent(filename)}` : ''
+  if (type === 'raw') {
+    return `${CONFIG.api}/${type}${path}`
+  }
   return `${CONFIG.api}/${type}${pathWithFilename}${searchParams}`
 }
 function url2Path(url = '/') {
